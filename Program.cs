@@ -2,34 +2,34 @@
 
 namespace linkedListt
 {
-    public class Node
+    public class Node<T>
     {
-        public Node(int value)
+        public Node(T value)
         {
             this.value = value;
             next = null;
         }
 
-        public int value;
-        public Node next;
+        public T value;
+        public Node<T> next;
     }
 
-    public class LinkedList
+    public class LinkedList<T>
     {
         private int count = 0;
-        private Node head;
-        private Node tail;
+        private Node<T> head;
+        private Node<T> tail;
 
         public int GetCount()
         {
             return count;
         }
 
-        public Node GetTail()
+        public Node<T> GetTail()
         {
             return tail;
         }
-        public Node GetHead()
+        public Node<T> GetHead()
         {
             return head;
         }
@@ -37,7 +37,7 @@ namespace linkedListt
         public void Print()
         {
             string values = "";
-            Node start = head;
+            Node<T> start = head;
             while (start != null)
             {
                 values += start.value + " ";
@@ -46,7 +46,7 @@ namespace linkedListt
             Console.WriteLine(values);
         }
 
-        public void AddTail(Node x)
+        public void AddTail(Node<T> x)
         {
             if (count == 0)
             {
@@ -70,7 +70,7 @@ namespace linkedListt
             }
         }
 
-        public void AddHead(Node x)
+        public void AddHead(Node<T> x)
         {
             if (count == 0)
             {
@@ -93,10 +93,10 @@ namespace linkedListt
             count += 1;
         }
 
-        public void AddAfter(Node after, Node nodeToInsert)
+        public void AddAfter(Node<T> after, Node<T> nodeToInsert)
         {
             bool flag = false;
-            Node current = head;
+            Node<T> current = head;
             while (current != null)
             {
                 flag = flag || current == after;
@@ -119,10 +119,10 @@ namespace linkedListt
             count = 0;
         }
 
-        private Node FindNodeBeforeCurrent(Node x)
+        private Node<T> FindNodeBeforeCurrent(Node<T> x)
         {
-            Node current = head;
-            Node node_before_current = null;
+            Node<T> current = head;
+            Node<T> node_before_current = null;
             while (current != null)
             {
                 if (current.next != x)
@@ -137,9 +137,9 @@ namespace linkedListt
             }
             return node_before_current;
         }
-        public void RemoveNode(Node x)
+        public void RemoveNode(Node<T> x)
         {
-            Node current = head;
+            Node<T> current = head;
             if (current == x)
             {
                 head = current.next;
@@ -147,7 +147,7 @@ namespace linkedListt
             }
             else
             {
-                Node finish = FindNodeBeforeCurrent(x);
+                Node<T> finish = FindNodeBeforeCurrent(x);
                 if (finish != null)
                 {
                     finish.next = finish.next.next;
@@ -157,10 +157,10 @@ namespace linkedListt
             }
         }
 
-        public void RemoveByValue(int val)
+        public void RemoveByValue(T val)
         {
-            Node current = head;
-            if (current.value == val)
+            Node<T> current = head;
+            if (current.value.Equals(val))
             {
                 head = current.next;
                 count -= 1;
@@ -168,17 +168,25 @@ namespace linkedListt
             else
             {
                 int i = 0;
-                Node before = null;
+                Node<T> before = null;
                 while (i < count)
                 {
-                    if (current.next.value != val)
+                    if (current.next != null)
                     {
-                        current = current.next;
-                        i += 1;
+                        if (current.next.value.Equals(val))
+                        {
+                            before = current;
+                            Console.WriteLine("find");
+                            break;
+                        }
+                        else
+                        {
+                            current = current.next;
+                            i += 1;
+                        }
                     }
                     else
                     {
-                        before = current;
                         break;
                     }
                 }
@@ -193,15 +201,15 @@ namespace linkedListt
 
        
 
-        public void RemoveAllByValue(int val)
+        public void RemoveAllByValue(T val)
         {
-            Node counter_before = head;
-            Node counter_present = head.next;
+            Node<T> counter_before = head;
+            Node<T> counter_present = head.next;
             int i = 0;
             int cc = count;
             while (i < cc)
             {
-                if (counter_before.value == val && counter_before == head)
+                if (counter_before.value.Equals(val) && counter_before == head)
                 {
                     head = counter_present;
                     counter_before = head;
@@ -227,7 +235,7 @@ namespace linkedListt
                     }
                     else
                     {
-                        if (counter_present.value == val)
+                        if (counter_present.value.Equals(val))
                         {
                             if (counter_present == tail)
                             {
@@ -255,12 +263,12 @@ namespace linkedListt
             }
         }
 
-        public Node FindByValue(int val)
+        public Node<T> FindByValue(T val)
         {
-            Node current = head;
+            Node<T> current = head;
             while (current != null)
             {
-                if (current.value == val) {
+                if (current.value.Equals(val)) {
                     return current; 
                 }
                 else
@@ -276,22 +284,26 @@ namespace linkedListt
     {
         static void Main(string[] args)
         {
-            Node k = new Node(1);
-            Node ka = new Node(2);
-            Node h = new Node(3);
-            Node r = new Node(4);
-            Node a = new Node(5);
-            Node p = new Node(6);
-            LinkedList l = new LinkedList();
+            /*Node<string> k = new Node<string>("a");
+            Node<string> ka = new Node<string>("a");
+            Node<string> h = new Node<string>("a");
+            Node<string> r = new Node<string>("a");
+            LinkedList<string> l = new LinkedList<string>();
             l.AddTail(k);
             l.AddTail(ka);
             l.AddTail(h);
-            l.AddAfter(p,r);
-            l.AddTail(p);
+            l.AddTail(r);
             l.Print();
-            l.RemoveNode(p);
+            l.RemoveAllByValue("a");
             l.Print();
-            Console.WriteLine("Count: " + l.GetCount());
+            Console.WriteLine("Count: " + l.GetCount());*/
+            LinkedList<string> linklist = new LinkedList<string>();
+            Node<string> node_one = new Node<string>("first");
+            Node<string> node_two = new Node<string>("second");
+            linklist.AddTail(node_one);
+            linklist.AddTail(node_one);
+            linklist.RemoveNode(node_one);
+            linklist.Print();
         }
     }
 }

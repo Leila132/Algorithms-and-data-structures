@@ -178,6 +178,7 @@ namespace NUnitTestProject1
             linklist.AddTail(node_two);
             linklist.RemoveNode(node_one);
             Assert.AreEqual(node_two, linklist.GetHead());
+            Assert.AreEqual(node_two, linklist.GetTail());
         }
         [Test]
         public void RemoveNode_mid_Test()
@@ -229,6 +230,7 @@ namespace NUnitTestProject1
             linklist.AddTail(node_two);
             linklist.RemoveByValue("first");
             Assert.AreEqual(node_two, linklist.GetHead());
+            Assert.AreEqual(node_two, linklist.GetTail());
         }
         [Test]
         public void RemoveNodeByValue_mid_Test()
@@ -252,6 +254,7 @@ namespace NUnitTestProject1
             linklist.AddTail(node_one);
             linklist.AddTail(node_two);
             linklist.RemoveByValue("second");
+            Assert.AreEqual(node_one, linklist.GetHead());
             Assert.AreEqual(node_one, linklist.GetTail());
         }
         [Test]
@@ -265,6 +268,7 @@ namespace NUnitTestProject1
             linklist.RemoveByValue("third");
             Assert.AreEqual(2, linklist.GetCount());
         }
+        /// needed 1-2 more tests with duplicates: ("first", "first", "second"), delete "first". ("second", "first", "first"), delete "first".
 
         ///RemoveAllByValue
         [Test]
@@ -278,7 +282,7 @@ namespace NUnitTestProject1
             linklist.AddTail(node_two);
             linklist.AddTail(node_three);
             linklist.RemoveAllByValue(1);
-            Assert.AreEqual(null, linklist.FindByValue(1));
+            Assert.AreEqual(null, linklist.FindByValue(1)); /// tests for FindByValue needed upper
         }
         [Test]
         public void RemoveAllByValue_213_23_Test()
@@ -421,6 +425,8 @@ namespace NUnitTestProject1
             linklist.RemoveAllByValue(1);
             Assert.AreEqual(null, linklist.FindByValue(1));
         }
+        
+        /// needed to check head, tail
 
         ///FindByValue
         [Test]
@@ -468,6 +474,8 @@ namespace NUnitTestProject1
             linklist.AddTail(node_two);
             Assert.AreEqual(null, linklist.FindByValue("third"));
         }
+        
+        /// needed 2 tests: 1 - with duplicates, 2 - with list which contains 1 element.
 
         ///GetCount
         [Test]

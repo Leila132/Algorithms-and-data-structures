@@ -2,30 +2,38 @@
 
 namespace Stack
 {
-    public class Node<T>
-    {
-        public Node<T> next;
-        public T value;
-        public Node(T value)
-        {
-            this.value = value;
-            next = null;
-        }
-
-    }
     public class Stack<T>
     {
+        public class Node<T>
+        {
+            public Node<T> next;
+            public T value;
+            public Node(T value)
+            {
+                this.value = value;
+                next = null;
+            }
+
+        }
         private Node<T> up;
         private Node<T> down;
         private int count = 0;
 
-        public Node<T> GetUp()
+        public T GetUp()
         {
-            return up;
+            if (up == null)
+            {
+                return default(T);
+            }
+            else { return up.value; }
         }
-        public Node<T> GetDown()
+        public T GetDown()
         {
-            return down;
+            if (down == null)
+            {
+                return default(T);
+            }
+            else { return down.value; }
         }
         public int GetCount()
         {
@@ -42,43 +50,26 @@ namespace Stack
             }
             Console.WriteLine(values);
         }
-        private bool FindNode(Node<T> x)
+        public void Push(T x)
         {
-            Node<T> current = up;
-            while (current != null)
+            Node<T> a = new Node<T>(x);
+            if (count == 0)
             {
-                if (current.Equals(x))
-                {
-                    return true;
-                }
-                else
-                {
-                    current = current.next;
-                }
+                up = a;
+                down = a;
             }
-            return false;
-        }
-        public void Push(Node<T> x)
-        {
-            if (!FindNode(x))
+            else
             {
-                if (count == 0)
-                {
-                    up = x;
-                    down = x;
-                }
-                else
-                {
-                    x.next = up;
-                    up = x;
-                }
-                count += 1;
+                a.next = up;
+                up = a;
             }
+            count += 1;
         }
-        public void Pop()
+        public T Pop()
         {
             if (count != 0)
             {
+                Node<T> rtrn = up;
                 if (count == 1)
                 {
                     up = null;
@@ -89,7 +80,9 @@ namespace Stack
                     up = up.next;
                 }
                 count -= 1;
+                return rtrn.value;
             }
+            return default(T);
         }
     }
     class Program

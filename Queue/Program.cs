@@ -2,7 +2,9 @@
 
 namespace Queue
 {
-    public class Node<T>
+    public class Queue<T>
+    {
+        public class Node<T>
         {
             public Node<T> next;
             public T value;
@@ -13,19 +15,26 @@ namespace Queue
             }
 
         }
-    public class Queue<T>
-    {
+
         private Node<T> front;
         private Node<T> back;
         private int count = 0;
 
-        public Node<T> GetFront()
+        public T GetFront()
         {
-            return front;
+            if (front == null)
+            {
+                return default(T);
+            }
+            else { return front.value; }
         }
-        public Node<T> GetBack()
+        public T GetBack()
         {
-            return back;
+            if (back == null)
+            {
+                return default(T);
+            }
+            else { return back.value; }
         }
         public int GetCount()
         {
@@ -42,43 +51,26 @@ namespace Queue
             }
             Console.WriteLine(values);
         }
-        private bool FindNode(Node<T> x)
+        public void Enqueue(T x)
         {
-            Node<T> current = front;
-            while (current != null)
+            Node<T> a = new Node<T>(x);
+            if (count == 0)
             {
-                if (current.Equals(x))
-                {
-                    return true;
-                }
-                else
-                {
-                    current = current.next;
-                }
+                front = a;
+                back = a;
             }
-            return false;
-        }
-        public void Enqueue(Node<T> x)
-        {
-            if (!FindNode(x))
+            else
             {
-                if (count == 0)
-                {
-                    front = x;
-                    back = x;
-                }
-                else
-                {
-                    back.next = x;
-                    back = x;
-                }
-                count += 1;
+                back.next = a;
+                back = a;
             }
+            count += 1;
         }
-        public void Dequeue()
+        public T Dequeue()
         {
             if (count != 0)
             {
+                T rtrn = front.value;
                 if (count == 1)
                 {
                     front = null;
@@ -89,7 +81,9 @@ namespace Queue
                     front = front.next;
                 }
                 count -= 1;
+                return rtrn;
             }
+            return default(T);
         }
     }
     static class Program
